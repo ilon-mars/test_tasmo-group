@@ -1,0 +1,68 @@
+$send-msg-color: transparentize($success-color, 0.1)
+$received-msg-color: transparentize($light-color, 0.1)
+
+.message
+  max-width: 70%
+  flex-shrink: 0
+  border-top-left-radius: $space-s
+  border-top-right-radius: $space-s
+  padding: $space-xs
+  display: flex
+  flex-direction: column
+
+  &:not(:last-of-type)
+    margin-bottom: $space-s
+
+  &--send
+    align-self: flex-end
+    background-color: $send-msg-color
+    color: $light-color
+    border-bottom-left-radius: $space-s
+
+  &--received
+    align-self: flex-start
+    background-color: $received-msg-color
+    color: $dark-color
+    border-bottom-right-radius: $space-s
+
+    .message__status
+      display: none
+
+  &__body
+    margin-bottom: $space-xs
+    white-space: pre-line
+
+  &__author
+    color: $extra-color
+    font-weight: 500
+    font-size: 0.75rem
+
+  &__status
+    display: flex
+    font-size: 0.75rem
+    color: $warning-color
+    align-items: center
+    align-self: flex-end
+
+    &-icon
+      width: 1rem
+      height: 1rem
+
+.status
+  &--success
+    fill: $light-color
+
+  &--error
+    margin-left: 0.5rem
+    stroke: $warning-color
+
+  &--loading
+    stroke: $light-color
+    animation: loading 1s infinite linear
+
+@keyframes loading
+  0%
+    transform: rotate(0)
+
+  100%
+    transform: rotate(360deg)
