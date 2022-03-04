@@ -6,7 +6,7 @@ export const store = createStore({
   state() {
     return {
       db: null,
-      username: 'kirill',
+      username: null,
       messages: [],
     };
   },
@@ -27,6 +27,9 @@ export const store = createStore({
     },
     DELETE_MESSAGE: (state, msgIndex) => {
       state.messages.splice(msgIndex, 1);
+    },
+    SET_USERNAME: (state, username) => {
+      state.username = username;
     },
   },
 
@@ -61,6 +64,9 @@ export const store = createStore({
       await state.db.delete(message.created);
       await dispatch('sendMessage', message);
       commit('DELETE_MESSAGE', msgIndex);
+    },
+    login({ commit }, username) {
+      commit('SET_USERNAME', username);
     },
   },
 });
