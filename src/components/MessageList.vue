@@ -1,23 +1,27 @@
 <template>
-  <ul class="messages">
-    <MessageItem class="message--send"
-      ><template #status><MessageStatusError /></template
-    ></MessageItem>
-    <MessageItem class="message--send"
-      ><template #status><MessageStatusLoading /></template
-    ></MessageItem>
-    <MessageItem class="message--send"
-      ><template #status><MessageStatusSuccess /></template
-    ></MessageItem>
-    <MessageItem class="message--received">
-      <template #author><span class="message__author">Author name</span></template>
+  <ul v-if="isLoaded" class="messages">
+    <MessageItem
+      v-for="msg in messages"
+      :key="msg.created"
+      :msg="msg"
+      :is-author="msg.author === loggedUsername"
+      :class="msg.author === loggedUsername ? 'message--send' : 'message--received'"
+    >
     </MessageItem>
   </ul>
 </template>
 
 <script setup>
 import MessageItem from '@/components/MessageListItem.vue';
-import MessageStatusLoading from '@/components/MessageStatusLoading.vue';
-import MessageStatusError from '@/components/MessageStatusError.vue';
-import MessageStatusSuccess from '@/components/MessageStatusSuccess.vue';
+import { ref, computed } from 'vue';
+import { useStore } from 'vuex';
+
+const isLoaded = ref(false);
+const messages = computed(() => store.state.messages);
+const store = useStore();
+const loggedUsername = store.state.username;
+
+store.dispatch('fetchMessages').then(() => {
+  isLoaded.value = true;
+});
 </script>

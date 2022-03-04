@@ -21,10 +21,19 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useStore } from 'vuex';
 
+const store = useStore();
 const message = ref('');
+const loggedUsername = store.state.username;
 
-const onSubmit = () => {
-  console.log(message.value);
+const onSubmit = e => {
+  store.dispatch('sendMessage', {
+    created: Date.now(),
+    author: loggedUsername,
+    text: message.value,
+  });
+
+  e.target.reset();
 };
 </script>

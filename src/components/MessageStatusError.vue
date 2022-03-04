@@ -8,7 +8,10 @@
 </template>
 
 <script setup>
+import { defineEmits } from 'vue';
+const emit = defineEmits(['sendAgain']);
+
 const sendAgain = () => {
-  console.log('send again');
+  emit('sendAgain');
 };
 </script>
