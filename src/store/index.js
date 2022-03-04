@@ -6,7 +6,7 @@ export const store = createStore({
   state() {
     return {
       db: null,
-      username: null,
+      username: sessionStorage.getItem('username') || null,
       messages: [],
     };
   },
@@ -67,6 +67,7 @@ export const store = createStore({
     },
     login({ commit }, username) {
       commit('SET_USERNAME', username);
+      sessionStorage.setItem('username', username);
     },
   },
 });
